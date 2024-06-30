@@ -1,0 +1,324 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录/注册</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f6f5f7;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    text-transform: capitalize;
+  }
+
+  .container {
+    position: relative;
+    width: 768px;
+    height: 480px;
+    background-color: white;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .form-container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    transition: all 0.6s ease-in-out;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 50px;
+  }
+
+  input {
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    background-color: #eee;
+    border: none;
+  }
+
+  .forget-password {
+    display: inline-block;
+    height: 20px;
+    text-decoration: none;
+    color: #bbb;
+    text-transform: capitalize;
+    font-size: 12px;
+  }
+
+  .forget-password:hover {
+    color: lightslategray;
+    border-bottom: 2px solid rgba(34, 130, 255, 0.7);
+  }
+
+  button {
+    background: pin k;
+    padding: 10px 50px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: white;
+    margin-top: 10px;
+    outline: none;
+    transition: transform 80;
+    background: rgba(34, 130, 255, 0.7);
+  }
+
+  button:hover {
+    background: rgba(27, 107, 213, 0.7);
+    cursor: pointer;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  .overlay_container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 100;
+    right: 0;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    left: -100%;
+    background-color: rgba(34, 130, 255, 0.7);
+  }
+
+  .overlay_panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    color: white;
+    padding: 0 40px;
+    text-align: center;
+  }
+
+  .overlay_panel button {
+    background-color: transparent;
+    border: 1px solid white;
+  }
+
+  .overlay_panel p {
+    font-size: 12px;
+    margin: 10px 0 15px 0;
+  }
+
+  .overlay_right_container {
+    right: 0;
+  }
+
+  .container.active .sign-up-container {
+    transform: translateX(100%);
+    z-index: 5;
+  }
+
+  .container.active .sign-in-container {
+    transform: translateX(100%);
+  }
+
+  .container.active .overlay_container {
+    transform: translateX(-100%);
+  }
+
+  .container.active .overlay {
+    transform: translateX(50%);
+  }
+
+  .avatar-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(34, 130, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+  }
+
+  #avatar-select {
+    background: rgba(34, 130, 255, 0.7);
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 0;
+    color: #fff;
+    outline: none;
+    border-radius: 10px;
+  }
+
+  #sign-up-avatar {
+    display: none;
+  }
+</style>
+
+<body>
+  <!-- 登录/注册容器 -->
+  <div class="container">
+    <!-- 注册 -->
+    <div class="form-container sign-up-container">
+      <div class="form">
+        <h2>注册</h2>
+        <input type="text" name="username" id="sign-up-username" placeholder="用户名...">
+        <input type="email" name="email" id="sign-up-email" placeholder="邮箱...">
+        <input type="password" name="password" id="sign-up-password" placeholder="密码...">
+        <button class="signUp">注册</button>
+      </div>
+    </div>
+    <!-- 登录 -->
+    <div class="form-container sign-in-container">
+      <div class="form">
+        <h2>登录</h2>
+        <input type="email" name="email" id="sign-in-email" placeholder="邮箱...">
+        <input type="password" name="password" id="sign-in-password" placeholder="密码...">
+        <a href="#" class="forget-password">忘记密码</a>
+        <button class="signIn">登录</button>
+      </div>
+    </div>
+    <!-- 覆盖容器 -->
+    <div class="overlay_container">
+      <div class="overlay">
+        <!-- 覆盖左边 -->
+        <div class="overlay_panel overlay_left_container">
+          <h2>欢迎回来!</h2>
+          <p>要保持联系，请使用您的个人信息登录</p>
+          <button id="sign-in">登录</button>
+        </div>
+        <!-- 覆盖右边 -->
+        <div class="overlay_panel overlay_right_container">
+          <h2>你好, 朋友!</h2>
+          <p>输入您的个人信息并开始与我们一起的旅程</p>
+          <button id="sign-up">注册</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function selectAvatar(event) {
+      var select = event.target;
+      var selectedAvatar = select.value;
+
+      // Update the preview image based on the selected option
+      var img = document.getElementById('preview');
+      img.src = './images/' + selectedAvatar + '.jpg'; // Update the path to your actual image files
+      img.style.display = 'block';
+    }
+    function previewImage(event) {
+      var input = event.target;
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = document.getElementById('preview');
+        img.src = reader.result;
+        img.style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  </script>
+  <script>
+    // 默认账号密码
+    const defaultUser = {
+      email: '123456',
+      password: '123456'
+    };
+
+    // 存储默认账号到 local storage
+    localStorage.setItem('defaultUser', JSON.stringify(defaultUser));
+
+    // 切换容器
+    const signUpButton = document.getElementById('sign-up');
+    const signInButton = document.getElementById('sign-in');
+    const container = document.querySelector('.container');
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add('active');
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove('active');
+    });
+
+    // 注册
+    document.querySelector('.signUp').addEventListener('click', () => {
+      const username = document.getElementById('sign-up-username').value;
+      const email = document.getElementById('sign-up-email').value;
+      const password = document.getElementById('sign-up-password').value;
+
+      if (username && email && password) {
+        const user = {
+          username: username,
+          email: email,
+          password: password
+        };
+
+        localStorage.setItem('user', JSON.stringify(user));
+        alert('注册成功，请登录！');
+        container.classList.remove('active');
+      } else {
+        alert('请填写所有字段');
+      }
+    });
+
+    // 登录
+    document.querySelector('.signIn').addEventListener('click', () => {
+      const email = document.getElementById('sign-in-email').value;
+      const password = document.getElementById('sign-in-password').value;
+
+      const user = JSON.parse(localStorage.getItem('user'));
+      const defaultUser = JSON.parse(localStorage.getItem('defaultUser'));
+      console.log(defaultUser.email === email, defaultUser.password, password)
+      if ((user && user.email === email && user.password === password) ||
+        (defaultUser && defaultUser.email === email && defaultUser.password === password)) {
+        location.href = "./index.html"
+      } else {
+        alert('邮箱或密码错误');
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+---
+import Carousel from "./Carousel.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const pages = {
+	"首页":"index.html",
+	"关于我们":"about.html",
+	"社团活动":"activities.html",
+	"成员介绍":"members.html"
+}
+---
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>大学社团网-{title}</title>
+	<link rel="stylesheet" href="css/style.css">
+	{title === '成员介绍' ? <link rel="stylesheet" type="text/css" href="css/caipu.css" /> : null}
+	{title === '社团活动' ? <link rel="stylesheet" type="text/css" href="css/heal.css" /> : null}
+	{title === '关于我们' ? <link rel="stylesheet" type="text/css" href="css/heal.css" /> : null}
+</head>
+
+<body>
+	<div class="nav">
+		<ul class="uu-nav">
+			<li class="logo">大学社团网</li>
+			{Object.keys(pages).map((key)=>{
+				return  <li class={`nav-lists ${key===title?"active":''}`}><a href={pages[key]}>{key}</a> </li>;
+			})}
+		</ul>
+	</div>
+	<header>
+		<Carousel/>
+	</header>
+	<slot/>
+	<Footer/>
+</body>
+
+</html>
